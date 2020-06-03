@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 
@@ -13,7 +15,9 @@ namespace TechJobsConsole
         public static List<Dictionary<string, string>> FindAll()
         {
             LoadData();
-            return AllJobs;
+            List<Dictionary<string, string>> jobs = new List<Dictionary<string, string>>(AllJobs);
+            jobs.Sort(SortResults);
+            return jobs;
         }
 
         /*
@@ -54,7 +58,7 @@ namespace TechJobsConsole
                     jobs.Add(row);
                 }
             }
-
+            jobs.Sort(SortResults);
             return jobs;
         }
         public static List<Dictionary<string, string>> FindByValue(string value)
@@ -74,8 +78,20 @@ namespace TechJobsConsole
                     }
                 }
             }
+            jobs.Sort(SortResults);
 
             return jobs;
+        }
+
+        public static int SortResults(Dictionary<string, string> x, Dictionary<string, string> y)
+        {
+            string stringX = x.Values.ToArray()[0].ToLower();
+            string stringY = y.Values.ToArray()[0].ToLower();
+
+
+            int retval = string.Compare(stringX, stringY);
+            
+            return retval;
         }
 
         /*
