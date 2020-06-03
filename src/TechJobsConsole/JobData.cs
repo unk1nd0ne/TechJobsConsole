@@ -66,6 +66,7 @@ namespace TechJobsConsole
             // load data, if not already loaded
             LoadData();
 
+            // Loop through the list, loop through the dict, if a key contains the desired value AND the job hasn't already been added, add job
             List<Dictionary<string, string>> jobs = new List<Dictionary<string, string>>();
 
             foreach (Dictionary<string, string> job in AllJobs)
@@ -85,6 +86,7 @@ namespace TechJobsConsole
 
         public static int SortResults(Dictionary<string, string> x, Dictionary<string, string> y)
         {
+            //Get first values and compare them alphabetically return the result for sorting
             string stringX = x.Values.ToArray()[0].ToLower();
             string stringY = y.Values.ToArray()[0].ToLower();
 
