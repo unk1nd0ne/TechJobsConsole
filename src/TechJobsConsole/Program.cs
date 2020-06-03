@@ -7,12 +7,14 @@ namespace TechJobsConsole
     {
         static void Main(string[] args)
         {
+            Boolean running = true;
             // Create two Dictionary vars to hold info for menu and data
 
             // Top-level menu options
             Dictionary<string, string> actionChoices = new Dictionary<string, string>();
             actionChoices.Add("search", "Search");
             actionChoices.Add("list", "List");
+            actionChoices.Add("quit", "Quit");
 
             // Column options
             Dictionary<string, string> columnChoices = new Dictionary<string, string>();
@@ -25,12 +27,15 @@ namespace TechJobsConsole
             Console.WriteLine("Welcome to LaunchCode's TechJobs App!");
 
             // Allow user to search/list until they manually quit with ctrl+c
-            while (true)
+            while (running)
             {
 
                 string actionChoice = GetUserSelection("View Jobs", actionChoices);
-
-                if (actionChoice.Equals("list"))
+                if (actionChoice.Equals("quit"))
+                {
+                    running = false;
+                }
+                else if (actionChoice.Equals("list"))
                 {
                     string columnChoice = GetUserSelection("List", columnChoices);
 
