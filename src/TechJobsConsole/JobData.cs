@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace TechJobsConsole
@@ -11,6 +12,7 @@ namespace TechJobsConsole
     {
         static List<Dictionary<string, string>> AllJobs = new List<Dictionary<string, string>>();
         static bool IsDataLoaded = false;
+        static string sortTerm = "";
 
         public static List<Dictionary<string, string>> FindAll()
         {
@@ -46,7 +48,7 @@ namespace TechJobsConsole
         {
             // load data, if not already loaded
             LoadData();
-
+            sortTerm = column;
             List<Dictionary<string, string>> jobs = new List<Dictionary<string, string>>();
 
             foreach (Dictionary<string, string> row in AllJobs)
@@ -59,6 +61,7 @@ namespace TechJobsConsole
                 }
             }
             jobs.Sort(SortResults);
+            sortTerm = "";
             return jobs;
         }
         public static List<Dictionary<string, string>> FindByValue(string value)
@@ -87,10 +90,20 @@ namespace TechJobsConsole
         public static int SortResults(Dictionary<string, string> x, Dictionary<string, string> y)
         {
             //Get first values and compare them alphabetically return the result for sorting
-            string stringX = x.Values.ToArray()[0].ToLower();
-            string stringY = y.Values.ToArray()[0].ToLower();
-
-
+            string stringX;
+            string stringY;
+            /*if (Equals(sortTerm.Length, 0))
+                {
+                stringX = x.Values.ToArray()[0].ToLower();
+                stringY = y.Values.ToArray()[0].ToLower();
+            }
+            else
+            {
+                stringX = x[sortTerm];
+                stringY = y[sortTerm];
+            }*/
+            stringX = x.Values.ToArray()[0].ToLower();
+            stringY = y.Values.ToArray()[0].ToLower();
             int retval = string.Compare(stringX, stringY);
             
             return retval;
